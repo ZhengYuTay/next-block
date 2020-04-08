@@ -28,7 +28,7 @@
     "operation"
   ],
   "engines": {
-    "node": ">= 6"
+    "node": ">=10.13.0"
   },
   "ava": {
     "babel": false,
