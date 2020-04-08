@@ -10,17 +10,10 @@ const {middleware2Koa} = NextBlock
 
 const SIMPLE = 'simple'
 
-module.exports = async (name, options, {
-  needCopy = true,
-  koa
-} = {}) => {
+module.exports = async (name, options, {needCopy = true, koa} = {}) => {
   const targetName = `simple-${name}`
 
-  const {copy, resolve} = fixture(
-    needCopy
-      ? SIMPLE
-      : targetName
-  )
+  const {copy, resolve} = fixture(needCopy ? SIMPLE : targetName)
 
   if (needCopy) {
     await copy(resolve('..', targetName))
@@ -38,17 +31,14 @@ module.exports = async (name, options, {
 
   const middleware = block.middleware()
 
-  const app = koa
-    ? new Koa()
-    : express()
+  const app = koa ? new Koa() : express()
 
   if (koa) {
     app.use(middleware2Koa(middleware))
   } else {
     // express
     app.get('/index', (req, res) => {
-      block.render(req, res, '/index')
-      .then(html => {
+      block.render(req, res, '/index').then(html => {
         res.end(html)
       })
     })
@@ -56,11 +46,7 @@ module.exports = async (name, options, {
     app.use(middleware)
   }
 
-  const agent = supertest(
-    koa
-      ? app.callback()
-      : app
-  )
+  const agent = supertest(koa ? app.callback() : app)
 
   return {
     get (path) {
@@ -68,6 +54,6 @@ module.exports = async (name, options, {
     },
     resolve,
     app,
-    block
+    block,
   }
 }

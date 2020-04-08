@@ -49,7 +49,7 @@ const getNextWebpack = nextRoot => {
 }
 
 // Get the next-server module installed
-const getNextServer = createGet('next-server', 'NEXT_NOT_FOUND')
+const getNextServer = createGet('next-server', 'NEXT_SERVER_NOT_FOUND')
 
 const resolveNextSubModule = (nextRoot, id) => {
   const path = join(nextRoot, id)
